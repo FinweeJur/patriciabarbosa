@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>experimenta fotografia — fotógrafa profissional e comunicadora popular</title>
+  <meta name="description" content="experimenta fotografia — fotografia social e engajada, eventos, teatro, música e cursos. Belo Horizonte e região. @experimentafotografia.">
+  <meta name="theme-color" content="#08080a">
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=panchang@400,500,600,700,800&f[]=nippo@300,400,500,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+
+  <!-- Rastro de fotos do cursor (Item 6) -->
+  <div id="trailLayer" class="trail-layer" aria-hidden="true"></div>
+
+  <!-- Barra de acessibilidade -->
+  <div class="a11y-bar" role="region" aria-label="Recursos de acessibilidade">
+    <div class="a11y-inner">
+      <div class="a11y-group">
+        <span class="a11y-label">Acessibilidade</span>
+        <div class="font-control" role="group" aria-label="Tamanho do texto">
+          <button type="button" data-font="-1" aria-label="A− diminuir texto">A−</button>
+          <button type="button" data-font="0" aria-label="A texto padrão">A</button>
+          <button type="button" data-font="1" aria-label="A+ aumentar texto">A+</button>
+        </div>
+        <button type="button" id="contrastBtn" class="pill" aria-pressed="false">Alto contraste</button>
+        <button type="button" id="motionBtn" class="pill" aria-pressed="false">Reduzir movimento</button>
+      </div>
+      <p class="a11y-note"><span class="dot" aria-hidden="true"></span> Tema escuro · Rastro de imagens ativo</p>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header" id="top">
+    <div class="header-inner">
+      <a class="brand" href="#top">
+        <span class="brand-mark" aria-hidden="true">ef</span>
+        <span class="brand-text">
+          <strong>experimenta fotografia</strong>
+          <small>@experimentafotografia</small>
+        </span>
+      </a>
+
+      <nav class="site-nav" aria-label="Navegação principal">
+        <a href="#feed">Feed</a>
+        <a href="#background">Background</a>
+        <a href="#gallery">Galeria</a>
+        <a href="#about">Sobre</a>
+        <a href="#contact">Contato</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+          <input id="searchInput" type="search" placeholder="Buscar séries" aria-label="Buscar séries fotográficas" autocomplete="off">
+        </div>
+        <div id="searchResults" class="search-results" role="listbox" aria-label="Séries encontradas" hidden></div>
+        <a class="ig-button" href="https://instagram.com/experimentafotografia" target="_blank" rel="noopener noreferrer">
+          <span aria-hidden="true">◉</span> Instagram
+        </a>
+        <button type="button" class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileNav" aria-label="Abrir menu">
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <nav id="mobileNav" class="mobile-nav" aria-label="Navegação móvel" hidden>
+      <a href="#feed">Feed</a>
+      <a href="#background">Background</a>
+      <a href="#gallery">Galeria</a>
+      <a href="#about">Sobre</a>
+      <a href="#contact">Contato</a>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- 1. HERO / FEED CONTÍNUO — Infinite Drift 2 -->
+    <section id="feed" class="hero" aria-label="Feed contínuo de fotografias">
+      <div id="dome" class="hero-dome" data-photo role="region" aria-label="Galeria contínua de fotografias de experimenta fotografia"></div>
+
+      <div class="hero-scrim" aria-hidden="true"></div>
+
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="dot" aria-hidden="true"></span> fotógrafa profissional e comunicadora popular</p>
+        <h1><span>experimenta</span><span class="outline">fotografia</span></h1>
+        <p class="hero-sub">Doutoranda em Comunicação na UFMG. Participa do Coletivo de Comunicação do Movimento Brasil Popular.</p>
+        <a class="hero-cta" href="#gallery">veja meu trabalho <span aria-hidden="true">→</span></a>
+      </div>
+
+      <p class="hero-side" aria-hidden="true">FEED CONTÍNUO · <span id="photoCount">62</span> FOTOGRAFIAS</p>
+
+      <div class="hero-controls">
+        <p class="hero-hint" aria-hidden="true">Arraste com o mouse para navegar</p>
+        <div class="drift-controls">
+          <button type="button" id="driftPause" class="pause-btn" aria-pressed="false">
+            <span id="driftPauseLabel">Pausar</span>
+          </button>
+          <span class="speed-badge" aria-label="Velocidade padrão 0.3">0.3×</span>
+        </div>
+        <a class="scroll-hint" href="#background">Ver portfólio <span aria-hidden="true">↓</span></a>
+      </div>
+    </section>
+
+    <!-- 2. BACKGROUND / GRID MOTION -->
+    <section id="background" class="section">
+      <div class="section-head">
+        <p class="section-tag">minha história</p>
+        <h2>comunicadora<br>popular</h2>
+        <p class="section-lede">Fotografia social e engajada, de manifestações e atos. Colaboração com coletivos de comunicação de movimentos sociais.</p>
+      </div>
+
+      <div class="motion-stage">
+        <div id="motionBoard" class="motion-board" aria-hidden="true"></div>
+        <div class="motion-card">
+          <span>jornada nacional de lutas</span>
+          <strong>atingidos por barragens</strong>
+          <p>Cerca de 3 mil pessoas de todo o país reunidas em Brasília, em novembro de 2023.</p>
+        </div>
+      </div>
+
+      <div class="story-note">
+        <p><b>jornada nacional de lutas dos atingidos por barragens</b> — A Jornada reuniu cerca de 3 mil atingidos por barragens e desastres climáticos de todo o país, que se reuniram em Brasília em novembro de 2023.</p>
+      </div>
+    </section>
+
+    <!-- 3. GALERIA / ACCORDION -->
+    <section id="gallery" class="section">
+      <div class="section-head">
+        <p class="section-tag">meu portfólio</p>
+        <h2>galeria</h2>
+        <p class="section-lede">Experiência com fotos de eventos e espetáculos teatrais e musicais. Fotos de peças, saraus, musicais, em ambientes fechados e abertos.</p>
+      </div>
+      <div id="accordionGallery" class="accordion" role="region" aria-label="Séries fotográficas"></div>
+    </section>
+
+    <!-- 4. SOBRE / COOL BENTO -->
+    <section id="about" class="section">
+      <div class="section-head">
+        <p class="section-tag">sobre</p>
+        <h2>pelas lentes</h2>
+        <p class="section-lede">Fotografia de eventos, cursos e seminários. Pacote de fotografias e horários a combinar.</p>
+      </div>
+
+      <div class="bento">
+        <article class="bento-card bento-featured lens" data-photo>
+          <img id="bentoPhoto" alt="Retrato fotografado por experimenta fotografia" loading="lazy" decoding="async">
+          <div class="bento-featured-copy">
+            <span>experimenta fotografia</span>
+            <h3>fotógrafa profissional<br>e comunicadora popular</h3>
+            <p>Belo Horizonte e região. Demais locais a combinar.</p>
+          </div>
+        </article>
+
+        <article class="bento-card bento-bio">
+          <span class="tag">formação</span>
+          <div>
+            <h3>Doutoranda em Comunicação</h3>
+            <p>UFMG · Coletivo de Comunicação do Movimento Brasil Popular.</p>
+          </div>
+        </article>
+
+        <article class="bento-card bento-stat">
+          <span class="tag">Brasília · 2023</span>
+          <div>
+            <strong>3 mil</strong>
+            <p>atingidos por barragens e desastres climáticos na Jornada Nacional de Lutas</p>
+          </div>
+          <div class="bar" aria-hidden="true"><span style="width:100%"></span></div>
+        </article>
+
+        <article class="bento-card bento-services">
+          <span class="tag">serviço</span>
+          <div>
+            <h3>fotografia de eventos, cursos e seminários</h3>
+            <p>Pacote de fotografias e horários a combinar · Fotos de 2024 — Curso Defensoras.</p>
+          </div>
+          <a class="text-link" href="#contact">Consultar pacote <span aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="bento-card bento-ig">
+          <span class="tag">instagram</span>
+          <div>
+            <h3 class="break">@experimentafotografia</h3>
+            <p>Bastidores, coberturas e novos trabalhos no feed.</p>
+          </div>
+          <a class="text-link" href="https://instagram.com/experimentafotografia" target="_blank" rel="noopener noreferrer">Visitar perfil <span aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="bento-card bento-quote">
+          <blockquote>“a fotografia pra mim é um sonho, pelas lentes gosto de registrar os cantos e corres diários do povo brasileiro”</blockquote>
+          <span class="tag">experimenta fotografia</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- 5. CONTATO -->
+    <section id="contact" class="contact">
+      <p class="section-tag">contato</p>
+      <h2 aria-label="Vamos conversar?">vamos<br><span class="outline">conversar?</span></h2>
+
+      <div class="contact-grid">
+        <div class="contact-item">
+          <span class="tag">cidades atendidas</span>
+          <p>belo horizonte e região<br>demais locais a combinar</p>
+        </div>
+        <div class="contact-item">
+          <span class="tag">whatsapp e celular</span>
+          <p><a href="tel:+553171404503">(31) 7140-4503</a></p>
+        </div>
+        <div class="contact-item">
+          <span class="tag">instagram</span>
+          <p><a href="https://instagram.com/experimentafotografia" target="_blank" rel="noopener noreferrer">@experimentafotografia</a></p>
+        </div>
+      </div>
+
+      <div class="contact-actions">
+        <a class="cta" href="https://instagram.com/experimentafotografia" target="_blank" rel="noopener noreferrer">
+          Falar no Instagram <span aria-hidden="true">→</span>
+        </a>
+        <a class="cta cta-ghost" href="tel:+553171404503">Ligar agora</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="brand-mark" aria-hidden="true">ef</span>
+        <div>
+          <strong>experimenta fotografia</strong>
+          <p>fotógrafa profissional e comunicadora popular</p>
+        </div>
+      </div>
+      <nav class="footer-nav" aria-label="Rodapé">
+        <a href="#feed">Feed</a>
+        <a href="#background">Background</a>
+        <a href="#gallery">Galeria</a>
+        <a href="https://instagram.com/experimentafotografia" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </nav>
+      <p class="footer-note">© <span id="year">2026</span> experimenta fotografia · @experimentafotografia · Belo Horizonte, MG. Fontes Panchang &amp; Nippo (Fontshare). Componentes Lightswind UI &amp; React Bits.</p>
+    </div>
+  </footer>
+
+  <!-- Speed Dial — Instagram -->
+  <div class="speed-dial">
+    <div id="fabMenu" class="fab-menu" role="menu" aria-label="Ações rápidas" hidden>
+      <a href="https://instagram.com/experimentafotografia" target="_blank" rel="noopener noreferrer" role="menuitem">
+        <span aria-hidden="true">◎</span> @experimentafotografia
+      </a>
+      <a href="tel:+553171404503" role="menuitem">
+        <span aria-hidden="true">✆</span> (31) 7140-4503
+      </a>
+      <button type="button" role="menuitem" id="toTop">↑ Voltar ao topo</button>
+    </div>
+    <button type="button" id="fabBtn" class="fab-btn" aria-expanded="false" aria-controls="fabMenu" aria-label="Abrir ações rápidas">
+      <span id="fabIcon" aria-hidden="true">+</span>
+    </button>
+  </div>
+
+  <script src="assets/js/photos.js"></script>
+  <script src="assets/js/infinite-drift.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
