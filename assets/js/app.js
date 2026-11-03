@@ -27,6 +27,12 @@
     return variant.src;
   }
 
+  function srcLens(photo) {
+    const candidates = photo.variants.filter((v) => v.w <= 1400);
+    const variant = candidates[candidates.length - 1] || photo.variants[0];
+    return variant.src;
+  }
+
   function srcset(photo) {
     return photo.variants.map((v) => `${v.src} ${v.w}w`).join(", ");
   }
@@ -224,12 +230,11 @@
   }
 
   /* -------------------------------------------------- 5. LENS (Item 8) */
-  const LOUPE_SIZE = 150;
+  const LOUPE_MAX = 150;
   const ZOOM = 2.6;
 
   document.querySelectorAll(".lens").forEach(function (host) {
-    const img = host.querySelector("img");
-    if (!img) return;
+    if (!host.querySelector("img")) return;
 
     const photo =
       PHOTOS.find((p) => p.id === host.dataset.photoId) || PHOTOS[0];
@@ -237,10 +242,18 @@
     const loupe = document.createElement("div");
     loupe.className = "lens-loupe";
     loupe.setAttribute("aria-hidden", "true");
-    loupe.style.backgroundImage = "url('" + src800(photo) + "')";
-    host.appendChild(loupe);
 
-    let bgReady = false;
+    // cópia em alta da mesma foto: o corte (object-fit: cover) é idêntico ao da
+    // imagem do card, então o zoom cai exatamente sob o cursor
+    const zoomed = document.createElement("img");
+    zoomed.className = "lens-img";
+    zoomed.src = srcLens(photo);
+    zoomed.alt = "";
+    zoomed.decoding = "async";
+    zoomed.loading = "lazy";
+    zoomed.draggable = false;
+    loupe.appendChild(zoomed);
+    host.appendChild(loupe);
 
     host.addEventListener("mousemove", function (event) {
       if (!canHover) return;
@@ -251,24 +264,33 @@
         loupe.style.display = "none";
         return;
       }
-      if (!bgReady) {
-        loupe.style.backgroundSize = rect.width * ZOOM + "px auto";
-        bgReady = true;
-      }
+
+      const size = Math.min(LOUPE_MAX, rect.width, rect.height);
+      const left = Math.max(0, Math.min(rect.width - size, x - size / 2));
+      const top = Math.max(0, Math.min(rect.height - size, y - size / 2));
+
       loupe.style.display = "block";
-      loupe.style.left =
-        Math.max(0, Math.min(rect.width - LOUPE_SIZE, x - LOUPE_SIZE / 2)) + "px";
-      loupe.style.top =
-        Math.max(0, Math.min(rect.height - LOUPE_SIZE, y - LOUPE_SIZE / 2)) + "px";
-      loupe.style.backgroundPosition =
-        -(x * ZOOM - LOUPE_SIZE / 2) + "px " + -(y * ZOOM - LOUPE_SIZE / 2) + "px";
+      loupe.style.width = size + "px";
+      loupe.style.height = size + "px";
+      loupe.style.left = left + "px";
+      loupe.style.top = top + "px";
+
+      // ponto do cursor dentro da lupa (não é o centro quando ela é presa na borda)
+      const targetX = x - left;
+      const targetY = y - top;
+
+      // a imagem interna tem o mesmo tamanho/corte do card; deslocamos para o
+      // cursor cair em targetX/targetY e escalamos em torno dele
+      zoomed.style.width = rect.width + "px";
+      zoomed.style.height = rect.height + "px";
+      zoomed.style.left = targetX - x + "px";
+      zoomed.style.top = targetY - y + "px";
+      zoomed.style.transformOrigin = x + "px " + y + "px";
+      zoomed.style.transform = "scale(" + ZOOM + ")";
     });
 
     host.addEventListener("mouseleave", function () {
       loupe.style.display = "none";
-    });
-    host.addEventListener("mouseenter", function () {
-      bgReady = false;
     });
   });
 
