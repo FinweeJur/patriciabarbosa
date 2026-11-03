@@ -214,11 +214,25 @@
 
   /* ---------------------------------------------------- 4. COOL BENTO */
   const bentoPhoto = document.getElementById("bentoPhoto");
-  const featured = photoAt(0);
-  document.querySelector(".bento-featured").dataset.photoId = featured.id;
-  bentoPhoto.src = src800(featured);
-  bentoPhoto.srcset = srcset(featured);
-  bentoPhoto.sizes = "(max-width: 640px) 92vw, 45vw";
+  // retrato dedicado da Patrícia, fora do feed
+  const RETRATO = {
+    id: "retrato-patricia",
+    alt: "Retrato fotografado por Patrícia Barbosa",
+    thumb: "assets/photos/retrato-patricia-800.webp",
+    variants: [
+      { w: 800, src: "assets/photos/retrato-patricia-800.webp" },
+      { w: 1400, src: "assets/photos/retrato-patricia-1400.webp" },
+    ],
+  };
+  const bentoFeatured = document.querySelector(".bento-featured");
+  if (bentoFeatured) bentoFeatured.dataset.photoId = RETRATO.id;
+  if (bentoPhoto) {
+    bentoPhoto.src = "assets/photos/retrato-patricia-800.webp";
+    bentoPhoto.srcset =
+      "assets/photos/retrato-patricia-800.webp 800w, assets/photos/retrato-patricia-1400.webp 1400w";
+    bentoPhoto.sizes = "(max-width: 640px) 92vw, 45vw";
+    bentoPhoto.alt = RETRATO.alt;
+  }
 
   const gradCard = document.getElementById("gradCard");
   if (gradCard) {
@@ -237,7 +251,8 @@
     if (!host.querySelector("img")) return;
 
     const photo =
-      PHOTOS.find((p) => p.id === host.dataset.photoId) || PHOTOS[0];
+      PHOTOS.find((p) => p.id === host.dataset.photoId) ||
+      (host.classList.contains("bento-featured") ? RETRATO : PHOTOS[0]);
 
     const loupe = document.createElement("div");
     loupe.className = "lens-loupe";
