@@ -1,6 +1,6 @@
-# experimenta fotografia
+# Patrícia Barbosa
 
-Site do portfólio **experimenta fotografia** — fotógrafa profissional e comunicadora popular (Belo Horizonte/MG).
+Site do portfólio de **Patrícia Barbosa** — fotógrafa profissional e comunicadora popular (Belo Horizonte/MG). Instagram: [@experimentafotografia](https://instagram.com/experimentafotografia).
 
 Site estático, sem build. Abra `index.html` ou publique a pasta inteira.
 
