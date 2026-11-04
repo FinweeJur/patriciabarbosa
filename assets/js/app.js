@@ -41,7 +41,7 @@
     const opts = options || {};
     const img = document.createElement("img");
     img.src = opts.thumb ? photo.thumb : src800(photo);
-    if (!opts.thumb) img.srcset = srcset(photo);
+    if (!opts.thumb && !opts.fixed) img.srcset = srcset(photo);
     if (opts.sizes) img.sizes = opts.sizes;
     img.alt = opts.alt || photo.alt;
     img.loading = opts.eager ? "eager" : "lazy";
@@ -121,7 +121,8 @@
     tile.appendChild(
       imageEl(photo, {
         alt: photo.alt,
-        sizes: "(max-width: 900px) 30vw, 18vw",
+        sizes: "(max-width: 900px) 30vw, 15vw",
+        eager: window.innerWidth >= 900,
       })
     );
     board.appendChild(tile);
@@ -217,14 +218,14 @@
 
   /* ---------------------------------------------------- 4. COOL BENTO */
   const bentoPhoto = document.getElementById("bentoPhoto");
-  // retrato dedicado da Patrícia, fora do feed
+  // retrato dedicado da fotógrafa, fora do feed
   const RETRATO = {
     id: "retrato-patricia",
-    alt: "Retrato fotografado por Patrícia Barbosa",
+    alt: "Patrícia Barbosa, fotógrafa",
     thumb: "assets/photos/retrato-patricia-800.webp",
     variants: [
       { w: 800, src: "assets/photos/retrato-patricia-800.webp" },
-      { w: 1400, src: "assets/photos/retrato-patricia-1400.webp" },
+      { w: 1066, src: "assets/photos/retrato-patricia-1066.webp" },
     ],
   };
   const bentoFeatured = document.querySelector(".bento-featured");
@@ -232,7 +233,7 @@
   if (bentoPhoto) {
     bentoPhoto.src = "assets/photos/retrato-patricia-800.webp";
     bentoPhoto.srcset =
-      "assets/photos/retrato-patricia-800.webp 800w, assets/photos/retrato-patricia-1400.webp 1400w";
+      "assets/photos/retrato-patricia-800.webp 800w, assets/photos/retrato-patricia-1066.webp 1066w";
     bentoPhoto.sizes = "(max-width: 640px) 92vw, 45vw";
     bentoPhoto.alt = RETRATO.alt;
   }
@@ -265,13 +266,20 @@
     // imagem do card, então o zoom cai exatamente sob o cursor
     const zoomed = document.createElement("img");
     zoomed.className = "lens-img";
-    zoomed.src = srcLens(photo);
     zoomed.alt = "";
     zoomed.decoding = "async";
-    zoomed.loading = "lazy";
     zoomed.draggable = false;
     loupe.appendChild(zoomed);
     host.appendChild(loupe);
+
+    // a cópia em alta só é pedida quando alguém realmente usa a lupa
+    host.addEventListener(
+      "mouseenter",
+      function () {
+        if (!zoomed.getAttribute("src")) zoomed.src = srcLens(photo);
+      },
+      { once: true }
+    );
 
     host.addEventListener("mousemove", function (event) {
       if (!canHover) return;
