@@ -222,18 +222,18 @@
   const RETRATO = {
     id: "retrato-patricia",
     alt: "Patrícia Barbosa, fotógrafa",
-    thumb: "assets/photos/retrato-patricia-800.webp",
+    thumb: "assets/photos/retrato-patricia-v2-800.webp",
     variants: [
-      { w: 800, src: "assets/photos/retrato-patricia-800.webp" },
-      { w: 1066, src: "assets/photos/retrato-patricia-1066.webp" },
+      { w: 800, src: "assets/photos/retrato-patricia-v2-800.webp" },
+      { w: 1066, src: "assets/photos/retrato-patricia-v2-1066.webp" },
     ],
   };
   const bentoFeatured = document.querySelector(".bento-featured");
   if (bentoFeatured) bentoFeatured.dataset.photoId = RETRATO.id;
   if (bentoPhoto) {
-    bentoPhoto.src = "assets/photos/retrato-patricia-800.webp";
+    bentoPhoto.src = "assets/photos/retrato-patricia-v2-800.webp";
     bentoPhoto.srcset =
-      "assets/photos/retrato-patricia-800.webp 800w, assets/photos/retrato-patricia-1066.webp 1066w";
+      "assets/photos/retrato-patricia-v2-800.webp 800w, assets/photos/retrato-patricia-v2-1066.webp 1066w";
     bentoPhoto.sizes = "(max-width: 640px) 92vw, 45vw";
     bentoPhoto.alt = RETRATO.alt;
   }

@@ -14,6 +14,10 @@ OUT_DIR = os.path.join(ROOT, "assets", "photos")
 WIDTHS = (800, 1066)
 QUALITY = {800: 84, 1066: 82}
 
+# Cache-bust: os arquivos publicados são servidos com Cache-Control immutable.
+# Ao trocar o retrato, aumente o sufixo (v2 -> v3) e ajuste assets/js/app.js.
+PREFIX = "retrato-patricia-v2"
+
 
 def main():
     if len(sys.argv) < 2:
