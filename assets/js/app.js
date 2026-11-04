@@ -62,8 +62,23 @@
   const pauseBtn = document.getElementById("driftPause");
   const pauseLabel = document.getElementById("driftPauseLabel");
 
+  // ordem embaralhada (determinística, LCG): mistura os assuntos para não repetir sequências parecidas no início da grade
+  function shuffleSeeded(items, seed) {
+    const out = items.slice();
+    let s = seed >>> 0;
+    const next = () => {
+      s = (s * 1664525 + 1013904223) >>> 0;
+      return s / 4294967296;
+    };
+    for (let i = out.length - 1; i > 0; i--) {
+      const j = Math.floor(next() * (i + 1));
+      [out[i], out[j]] = [out[j], out[i]];
+    }
+    return out;
+  }
+
   const dome = createInfiniteDrift2(domeHost, {
-    images: PHOTOS.map((p) => p.thumb),
+    images: shuffleSeeded(PHOTOS, 20261102).map((p) => p.thumb),
     tileWidth: 174,
     tileHeight: 226,
     gap: 14,
