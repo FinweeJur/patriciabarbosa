@@ -64,10 +64,10 @@
 
   const dome = createInfiniteDrift2(domeHost, {
     images: PHOTOS.map((p) => p.thumb),
-    tileWidth: 220,
-    tileHeight: 280,
-    gap: 16,
-    borderRadius: 20,
+    tileWidth: 174,
+    tileHeight: 226,
+    gap: 14,
+    borderRadius: 16,
     curve: 0.35,
     curveRadius: 1.5,
     zoom: 0.08,
@@ -75,7 +75,7 @@
     autoScrollX: 0.3,
     autoScrollY: 0.12,
     enableDrag: true,
-    dpr: 1.75,
+    dpr: 1.9,
   });
 
   let domePaused = false;
@@ -108,7 +108,10 @@
   /* ------------------------------------------------------ 2. GRID MOTION */
   const board = document.getElementById("motionBoard");
   // seleção editorial: retratos, carnaval, rua e cor
-  const GRID_SELECTION = [2, 3, 4, 22, 23, 24, 26, 35, 36, 37, 38, 39, 48, 56, 60, 61];
+  const GRID_SELECTION = [
+    2, 3, 4, 23, 24, 36, 37, 38, 39, 60, 61, 0,
+    1, 12, 14, 16, 56, 5, 8, 9, 17, 18, 30, 46,
+  ];
   for (let i = 0; i < GRID_SELECTION.length; i += 1) {
     const photo = photoAt(GRID_SELECTION[i]);
     const tile = document.createElement("div");
@@ -143,7 +146,7 @@
 
   /* ------------------------------------------------- 3. ACCORDION GALLERY */
   const SERIES = [
-    { title: "manifestações", cat: "fotografia social e engajada", index: 3, note: "Atos, manifestações e a luta por direitos." },
+    { title: "atos", cat: "manifestações & luta por direitos", index: 3, note: "Fotografia social e engajada, de manifestações e atos." },
     { title: "teatro", cat: "espetáculos teatrais", index: 18, note: "Peças e montagens em ambientes fechados e abertos." },
     { title: "eventos e cursos", cat: "seminários e encontros", index: 8, note: "Cursos, seminários e encontros — Curso Defensoras 2024." },
     { title: "música", cat: "saraus e musicais", index: 17, note: "Shows, saraus e apresentações musicais." },

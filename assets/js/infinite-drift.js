@@ -36,6 +36,7 @@
     uniform float uVignette;
     uniform sampler2D uAtlas;
     uniform vec2 uAtlasGrid;
+    uniform float uAtlasCount;
 
     float sdRoundedBox(vec2 p, vec2 b, float r) {
       vec2 q = abs(p) - b + r;
@@ -69,7 +70,12 @@
       }
 
       vec2 tileUv = clamp((rotatedLocal / uTileSize) + 0.5, 0.0, 1.0);
-      vec2 atlasCell = mod(mod(cell, uAtlasGrid) + uAtlasGrid, uAtlasGrid);
+
+      // Espalhamento: cada tile salta 7 colunas e 11 linhas no atlas, em vez de
+      // varrer o bloco em ordem. Assim a grade mostra fotos diferentes o tempo
+      // todo (o mod 8x8 antigo repetia a mesma sequência em cada linha).
+      float idx = mod(cell.x * 7.0 + cell.y * 11.0, uAtlasCount);
+      vec2 atlasCell = vec2(mod(idx, uAtlasGrid.x), floor(idx / uAtlasGrid.x));
       float atlasRow = uAtlasGrid.y - 1.0 - atlasCell.y;
       vec2 uv = (vec2(atlasCell.x, atlasRow) + tileUv) / uAtlasGrid;
 
@@ -176,7 +182,10 @@
     const count = Math.max(1, opts.images.length);
     const cols = Math.ceil(Math.sqrt(count));
     const rows = Math.ceil(count / cols);
-    const cell = count > 40 ? 224 : count > 16 ? 256 : 320;
+    // atlas 8x8 de 320px ~ 2560px: abaixo do limite de textura e com zoom nítido
+    const baseCell = count > 40 ? 320 : count > 16 ? 384 : 448;
+    const maxTex = gl.getParameter(gl.MAX_TEXTURE_SIZE) || 2048;
+    const cell = Math.max(128, Math.min(baseCell, Math.floor(maxTex / cols)));
     const atlasDim = cols * cell;
     const atlasCanvas = document.createElement("canvas");
     atlasCanvas.width = atlasDim;
@@ -274,6 +283,7 @@
     const uVig = gl.getUniformLocation(program, "uVignette");
     const uAtlas = gl.getUniformLocation(program, "uAtlas");
     const uAtlasGrid = gl.getUniformLocation(program, "uAtlasGrid");
+    const uAtlasCount = gl.getUniformLocation(program, "uAtlasCount");
 
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
@@ -380,6 +390,7 @@
       gl.uniform1f(uGray, opts.grayscale);
       gl.uniform1f(uVig, opts.vignette);
       gl.uniform2f(uAtlasGrid, cols, rows);
+      gl.uniform1f(uAtlasCount, count);
 
       gl.drawArrays(gl.TRIANGLES, 0, 6);
       raf = requestAnimationFrame(render);
