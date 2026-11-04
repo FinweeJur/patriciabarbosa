@@ -922,7 +922,14 @@ section[id] {
 .bento-grad h3 { font-size: 19px; font-weight: 700; line-height: 1.15; }
 .bento-grad p { margin-top: 8px; font-size: 12px; font-weight: 300; color: var(--muted); }
 .text-muted { font-size: 10.5px; color: var(--muted-2); }
-.break { font-size: clamp(12px, 1vw, 14px); letter-spacing: -0.01em; overflow-wrap: anywhere; }
+.break {
+  white-space: nowrap;
+  font-size: clamp(12.5px, 1vw, 13.5px);
+  letter-spacing: -0.01em;
+}
+@media (max-width: 639px) {
+  .break { white-space: normal; font-size: 16px; }
+}
 .bento-ig {
   background: linear-gradient(150deg, rgba(124, 58, 237, 0.14), rgba(219, 39, 119, 0.1) 60%, var(--surface));
 }
