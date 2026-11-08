@@ -47,6 +47,7 @@
     img.loading = opts.eager ? "eager" : "lazy";
     img.decoding = "async";
     img.draggable = false;
+    if (!opts.thumb) img.style.objectPosition = objectPosition(photo);
     return img;
   }
 
@@ -77,8 +78,28 @@
     return out;
   }
 
+  // Ponto focal (0 = topo, 1 = base) para não cortar rostos.
+  // Retratos: o rosto fica no terço superior. Paisagens/multidões: acima do centro.
+  const FOCAL_OVERRIDES = {
+    "retrato-patricia": 0.16,
+  };
+  function focalY(photo) {
+    if (!photo) return 0.3;
+    if (FOCAL_OVERRIDES[photo.id] != null) return FOCAL_OVERRIDES[photo.id];
+    const w = photo.w || 1;
+    const h = photo.h || 1;
+    if (h > w) return 0.2; // retrato: rosto no alto
+    return 0.42; // paisagem: gente normalmente na metade superior
+  }
+
+  function objectPosition(photo) {
+    return "50% " + Math.round(focalY(photo) * 100) + "%";
+  }
+
+  const shuffled = shuffleSeeded(PHOTOS, 20261102);
   const dome = createInfiniteDrift2(domeHost, {
-    images: shuffleSeeded(PHOTOS, 20261102).map((p) => p.thumb),
+    images: shuffled.map((p) => p.thumb),
+    focalY: shuffled.map(focalY),
     tileWidth: 174,
     tileHeight: 226,
     gap: 14,
@@ -251,6 +272,7 @@
       "assets/photos/retrato-patricia-v2-800.webp 800w, assets/photos/retrato-patricia-v2-1066.webp 1066w";
     bentoPhoto.sizes = "(max-width: 640px) 92vw, 45vw";
     bentoPhoto.alt = RETRATO.alt;
+    bentoPhoto.style.objectPosition = objectPosition(RETRATO);
   }
 
   const gradCard = document.getElementById("gradCard");
@@ -284,6 +306,9 @@
     zoomed.alt = "";
     zoomed.decoding = "async";
     zoomed.draggable = false;
+    // mesmo enquadramento do card, para o zoom casar com o que se vê
+    zoomed.style.objectPosition =
+      (host.querySelector("img") || {}).style?.objectPosition || objectPosition(photo);
     loupe.appendChild(zoomed);
     host.appendChild(loupe);
 

@@ -104,6 +104,7 @@
     const opts = Object.assign(
       {
         images: [],
+        focalY: [],
         tileWidth: 220,
         tileHeight: 280,
         gap: 16,
@@ -250,12 +251,14 @@
         let sy = 0;
         let sw = img.naturalWidth;
         let sh = img.naturalHeight;
+        // ponto focal vertical (0 = topo): mantém os rostos visíveis em vez do centro
+        const fy = Math.min(1, Math.max(0, opts.focalY[i] != null ? opts.focalY[i] : 0.5));
         if (aspect > 1) {
           sw = sh = img.naturalHeight;
           sx = (img.naturalWidth - sw) / 2;
         } else {
           sw = sh = img.naturalWidth;
-          sy = (img.naturalHeight - sh) / 2;
+          sy = (img.naturalHeight - sh) * fy;
         }
         try {
           ctx.drawImage(img, sx, sy, sw, sh, gx, gy, cell, cell);
